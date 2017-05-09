@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public TokenStore tokenStore() {
 		return new InMemoryTokenStore();
+		// JDBC TokenStore
 	}
 
 	@Bean
