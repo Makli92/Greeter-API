@@ -1,5 +1,7 @@
 package gr.zubatsoft.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +16,15 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private DataSource dataSource;
+	
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
@@ -49,8 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public TokenStore tokenStore() {
-		return new InMemoryTokenStore();
-		// JDBC TokenStore
+        return new JdbcTokenStore(dataSource);
 	}
 
 	@Bean
