@@ -9,4 +9,4 @@ INSERT INTO `users` (`id`, `password`, `user_name`, `enabled`) VALUES ('1', '123
 INSERT INTO `roles` (`id`, `role`) VALUES ('1', 'User'), ('2', 'Admin');
 
 ### Insert users' roles
-INSERT INTO `users_to_roles` (`user_id`, `role_id`) VALUES ('1', '1'), ('2', '2'), ('3', '1');
+INSERT INTO `users_to_roles` (`user_id`, `role_id`) VALUES ('1', '1'), ('1', '2'), ('2', '2'), ('3', '1');
