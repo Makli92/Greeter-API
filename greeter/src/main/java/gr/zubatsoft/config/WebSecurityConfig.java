@@ -30,8 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("ADMIN").and().withUser("bob")
-				.password("abc123").roles("USER");
+		auth
+			.jdbcAuthentication()
+			.dataSource(dataSource)
+				.usersByUsernameQuery("select user_name Username, password, enabled from users where user_name = ?")
+				.authoritiesByUsernameQuery("SELECT u.user_name Username, r.role FROM users u INNER JOIN users_to_roles utr ON u.id = utr.user_id INNER JOIN roles r ON utr.role_id = r.id where u.user_name = ?");
 	}
 
 	@Override

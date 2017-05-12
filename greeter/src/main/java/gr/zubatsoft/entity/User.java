@@ -26,6 +26,9 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled;
+	
 	@ManyToMany
     @JoinTable(	name = "users_to_roles", 
     			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -54,6 +57,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<Role> getRoles() {

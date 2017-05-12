@@ -1,6 +1,6 @@
 package gr.zubatsoft.config;
 
-import java.util.concurrent.TimeUnit;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
+	private DataSource dataSource;
+	
+	@Autowired
 	private TokenStore tokenStore;
 
 	@Autowired
@@ -29,16 +32,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		// clients.jdbc(dataSource) -> needs Datasource Autowired
-		clients
-			.inMemory()
-				.withClient("greeter-mobile-client")
-				.secret("greeter-pass")
-				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-				.scopes("read", "write", "trust")
-				.accessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1)).
-				refreshTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1));
+		clients.jdbc(dataSource);
 	}
 
 	@Override
