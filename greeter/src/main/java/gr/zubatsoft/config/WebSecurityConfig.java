@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
@@ -20,6 +22,8 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 @EnableWebSecurity
+@EnableOAuth2Client
+@EnableAuthorizationServer
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -77,4 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		store.setTokenStore(tokenStore);
 		return store;
 	}
+	
+	
+	
 }
